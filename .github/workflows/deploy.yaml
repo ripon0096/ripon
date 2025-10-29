@@ -5,11 +5,14 @@ on:
   push:
     branches:
       - main
+  schedule:
+    # Cron: প্রতি 5 ঘণ্টায় workflow চালাবে
+    - cron: '0 */5 * * *'
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
-    timeout-minutes: 300  # Optional: 5-hour max run
+    timeout-minutes: 300  # Maximum runtime 5 hours
 
     steps:
       - name: Checkout repository
@@ -27,6 +30,6 @@ jobs:
 
       - name: Run Telegram bot
         env:
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}  # Your bot token in main script
         run: |
           python 24.py
